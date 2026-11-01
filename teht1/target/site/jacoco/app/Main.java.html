@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">temperature-converter</a> &gt; <a href="index.source.html" class="el_package">app</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package app;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ChoiceDialog;
+import javafx.stage.Stage;
+
+<span class="nc" id="L12">public class Main extends Application {</span>
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+<span class="nc" id="L17">        ChoiceDialog&lt;String&gt; dialog = new ChoiceDialog&lt;&gt;(</span>
+            &quot;English&quot;,
+            &quot;Finnish&quot;, &quot;English&quot;, &quot;Swedish&quot;, &quot;Japanese&quot;
+        );
+
+<span class="nc" id="L22">        dialog.setTitle(&quot;Language&quot;);</span>
+<span class="nc" id="L23">        dialog.setHeaderText(&quot;Choose a language&quot;);</span>
+
+<span class="nc" id="L25">        String language = dialog.showAndWait().orElse(&quot;English&quot;);</span>
+
+<span class="nc bnc" id="L27" title="All 4 branches missed.">        Locale locale = switch (language) {</span>
+<span class="nc" id="L28">            case &quot;Finnish&quot; -&gt; new Locale(&quot;fi&quot;, &quot;FI&quot;);</span>
+<span class="nc" id="L29">            case &quot;Swedish&quot; -&gt; new Locale(&quot;sv&quot;, &quot;SE&quot;);</span>
+<span class="nc" id="L30">            case &quot;Japanese&quot; -&gt; new Locale(&quot;ja&quot;, &quot;JP&quot;);</span>
+<span class="nc" id="L31">            default -&gt; Locale.US;</span>
+        };
+
+<span class="nc" id="L34">        ResourceBundle bundle = ResourceBundle.getBundle(</span>
+            &quot;i18n.Message_bundle&quot;, locale
+        );
+
+<span class="nc" id="L38">        FXMLLoader loader = new FXMLLoader(</span>
+<span class="nc" id="L39">            getClass().getResource(&quot;/app/converter.fxml&quot;),</span>
+            bundle
+        );
+
+<span class="nc" id="L43">        Scene scene = new Scene(loader.load(), 350, 300);</span>
+
+<span class="nc" id="L45">        stage.setTitle(bundle.getString(&quot;title&quot;));</span>
+<span class="nc" id="L46">        stage.setScene(scene);</span>
+<span class="nc" id="L47">        stage.show();</span>
+<span class="nc" id="L48">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L51">        launch(args);</span>
+<span class="nc" id="L52">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

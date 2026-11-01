@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.ConverterController"
+      alignment="CENTER"
+      spacing="10">
+
+    <Label text="%title"/>
+
+    <TextField fx:id="temperatureInput"
+               promptText="%enter_temperature"/>
+
+    <ComboBox fx:id="fromUnit"/>
+
+    <ComboBox fx:id="toUnit"/>
+
+    <Button text="%convert"
+            onAction="#convert"/>
+
+    <Label fx:id="resultLabel"/>
+
+</VBox>

@@ -1,2 +1,4 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-temperature-converter,default,TemperatureConverter,51,35,5,4,14,5,5,7,1,5
+temperature-converter,app,Main,102,0,4,0,20,0,6,0,3,0
+temperature-converter,app,ConverterController,168,0,26,0,31,0,16,0,3,0
+temperature-converter,app,TemperatureConverter,0,35,0,4,0,5,0,7,0,5

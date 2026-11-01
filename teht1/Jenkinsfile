@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'temperature-converter'
+    }
+
+    stages {
+
+        stage('Build and Test') {
+            steps {
+                dir('teht1') {
+					sh '''
+               		mvn -B clean package dependency:copy-dependencies \
+                    -DincludeScope=runtime \
+                    -DoutputDirectory=target/dependency
+            '''
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('teht1') {
+                    sh '''
+                        docker build \
+                            -t temperature-converter:${BUILD_NUMBER} .
+                    '''
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                  )
+                ]) {
+                    sh '''
+                        set -eu
+
+                        echo "$DOCKERHUB_TOKEN" | docker login \
+                            -u "$DOCKERHUB_USER" --password-stdin
+
+                        docker tag temperature-converter:${BUILD_NUMBER} \
+                            "$DOCKERHUB_USER/temperature-converter:${BUILD_NUMBER}"
+
+                        docker tag temperature-converter:${BUILD_NUMBER} \
+                            "$DOCKERHUB_USER/temperature-converter:latest"
+
+                        docker push "$DOCKERHUB_USER/temperature-converter:${BUILD_NUMBER}"
+
+                        docker push "$DOCKERHUB_USER/temperature-converter:latest"
+
+                        docker logout
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('teht1') {
+                junit testResults: 'target/surefire-reports/*.xml',
+                      allowEmptyResults: true
+            }
+        }
+    }
+}
